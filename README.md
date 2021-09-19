@@ -2,6 +2,6 @@
 
 command execution
 
-'''shell
+```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/silvajhb/architecture-files-cli/master/mkarchdir.sh)"
-'''
+```
