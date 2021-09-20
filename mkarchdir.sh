@@ -51,36 +51,39 @@ CreateSWDir(){
 
 }
 
-while [ -n "$1" ]; do
-	if [ "$1" = "-hw" ]; then
-		CreateHWDir;
-		shift;
-		s='0';
-	fi
-	if [ "$1" = "-sw" ]; then
-		CreateSWDir;
-		shift;
-		s='0';
-	fi
-	if [ "$1" = "-docs" ]; then
-		shift
-		s='0';
-	fi
-	if [ "$1" = "-readme" ]; then
-		shift
-		s='0';	
-	fi
-	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-		print_usage;
-		exitcode='0';
-		s='0';
-		ExitFunction;
-	else
-		s="$s"+1;
-		if [ "$s" = "2" ]; then
+Main(){
+	while [ -n "$1" ]; do
+		if [ "$1" = "-hw" ]; then
+			CreateHWDir;
+			shift;
+			s='0';
+		fi
+		if [ "$1" = "-sw" ]; then
+			CreateSWDir;
+			shift;
+			s='0';
+		fi
+		if [ "$1" = "-docs" ]; then
+			shift
+			s='0';
+		fi
+		if [ "$1" = "-readme" ]; then
+			shift
+			s='0';	
+		fi
+		if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+			print_usage;
+			exitcode='0';
 			s='0';
 			ExitFunction;
+		else
+			s="$s"+1;
+			if [ "$s" = "2" ]; then
+				s='0';
+				ExitFunction;
+			fi
 		fi
-	fi
-done
+	done
+}
 
+Main;
