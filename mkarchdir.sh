@@ -24,16 +24,31 @@ print_usage(){
 
 CreateHWDir(){
 	if [ -d "$localdir/HARDWARE" ]; then
-		echo 'Directory is already exist!';			
+		echo 'HARDWARE Directory is already exist!';			
 		exitcode='1';
 		exit $exitcode;
 	else
-		echo 'Directory not exist!';
-		echo 'Start create directory!';
+		echo 'HARDWARE Directory not exist!';
+		echo 'Start create HARDWARE directory!';
 		mkdir -v "$localdir"/HARDWARE;
 		exitcode='0';
 		exit $exitcode;
 	fi
+}
+
+CreateSWDir(){
+	if [ -d "$localdir/SOFTWARE" ]; then
+		echo 'SOFTWARE Directory is already exist!';			
+		exitcode='1';
+		exit $exitcode;
+	else
+		echo 'SOFTWARE Directory not exist!';
+		echo 'Start create SOFTWARE directory!';
+		mkdir -v "$localdir"/SOFTWARE;
+		exitcode='0';
+		exit $exitcode;
+	fi
+
 }
 
 while [ -n "$1" ]; do
@@ -42,6 +57,7 @@ while [ -n "$1" ]; do
 		CreateHWDir;
 	elif [ "$1" = "-sw" ]; then
 		shift
+		createSWDir;
 	elif [ "$1" = "-docs" ]; then
 		shift
 	elif [ "$1" = "-readme" ]; then
