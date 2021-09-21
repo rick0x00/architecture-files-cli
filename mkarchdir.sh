@@ -36,6 +36,7 @@ function CreateEDADir(){
 			echo 'HARDWARE Directory exist!';			
 			echo 'Start create "Electronic Design Automation"(EDA) directory!';
 			mkdir -v "$localdir"/HARDWARE/EDA;
+			mkdir -v "$localdir"/HARDWARE/EDA/KiCad;
 			exitcode='0';
 		fi
 	else
@@ -53,6 +54,7 @@ function CreateCADDir(){
 			echo 'HARDWARE Directory exist!';			
 			echo 'Start create "Computer-Aided Design"(CAD) directory!';
 			mkdir -v "$localdir"/HARDWARE/CAD;
+			mkdir -v "$localdir"/HARDWARE/CAD/FreeCAD;
 			exitcode='0';
 		fi
 	else
@@ -140,6 +142,7 @@ function CreateReadmeDir(){
 			echo 'Start create HARDWARE/README.md file!';
 			touch "$localdir/HARDWARE/README.md";
 			var=$(basename $(pwd));
+			var="HARDWARE "$var;
 			var="#"$var;
 			echo $var > "$localdir"/HARDWARE/README.md;
 		fi
@@ -152,6 +155,7 @@ function CreateReadmeDir(){
 			echo 'Start create SOFTWARE/README.md file!';
 			touch "$localdir/SOFTWARE/README.md";
 			var=$(basename $(pwd));
+			var="SOFTWARE "$var;
 			var="#"$var;
 			echo $var > "$localdir"/SOFTWARE/README.md;
 		fi
