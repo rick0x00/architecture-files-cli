@@ -17,13 +17,49 @@ function print_usage(){
 	echo '';
 	GitHubDirSource;
 	echo '';
-	echo 'Usage: mkarchdir.sh1 [ -hw ] [ -sw ] [ -docs ] [ -readme ]';
+	echo 'Usage: mkarchdir.sh1 [ -hw ] [ -eda ] [ -cad ] [ -sw ] [ -docs ] [ -readme ]';
 	echo 'Option: (optional)';
-	echo '	-hw	Add Hardware Directories';
-	echo '	-sw	Add Software Directories';
+	echo '	-hw	Add Hardware Directory';
+	echo '	-eda	Add EDA Directory';
+	echo '	-cad	Add CAD Directory';
+	echo '	-sw	Add Software Directory';
 	echo '	-docs	Add Docments Directories';
 	echo '	-readme	Add README.md Files in all Directories(All README.md files recept respective title)';
 	echo '';
+}
+
+function CreateEDADir(){
+	if [ -d "$localdir/HARDWARE" ]; then
+		if [ -d "$localdir/HARDWARE/EDA" ]; then
+			echo 'EDA Directory is already exist!';	
+		else
+			echo 'HARDWARE Directory exist!';			
+			echo 'Start create "Electronic Design Automation"(EDA) directory!';
+			mkdir -v "$localdir"/HARDWARE/EDA;
+			exitcode='0';
+		fi
+	else
+		echo 'HARDWARE Directory not exist!';
+		echo 'Create EDA Directory failed!';
+		exitcode='1';
+	fi
+}
+
+function CreateCADDir(){
+	if [ -d "$localdir/HARDWARE" ]; then
+		if [ -d "$localdir/HARDWARE/CAD" ]; then
+			echo 'CAD Directory is already exist!';	
+		else
+			echo 'HARDWARE Directory exist!';			
+			echo 'Start create "Computer-Aided Design"(CAD) directory!';
+			mkdir -v "$localdir"/HARDWARE/CAD;
+			exitcode='0';
+		fi
+	else
+		echo 'HARDWARE Directory not exist!';
+		echo 'Create EDA Directory failed!';
+		exitcode='1';
+	fi
 }
 
 function CreateHWDir(){
@@ -63,22 +99,22 @@ function CreateDocsDir(){
 	fi
 	if [ -d "$localdir/HARDWARE" ]; then
 		if [ -d "$localdir/HARDWARE/DOCUMENTS" ]; then
-			echo '/HARDWARE/DOCUMENTS Directory is already exist!';			
+			echo 'HARDWARE DOCUMENTS Directory is already exist!';			
 			exitcode='1';
 		else
-			echo '/HARDWARE/DOCUMENTS Directory not exist!';
-			echo 'Start create /HARDWARE/DOCUMENTS directory!';
+			echo 'HARDWARE DOCUMENTS Directory not exist!';
+			echo 'Start create HARDWARE DOCUMENTS directory!';
 			mkdir -v "$localdir"/HARDWARE/DOCUMENTS;
 			exitcode='0';
 		fi 
 	fi
 	if [ -d "$localdir/SOFTWARE" ]; then
 		if [ -d "$localdir/SOFTWARE/DOCUMENTS" ]; then
-			echo '/SOFTWARE/DOCUMENTS Directory is already exist!';			
+			echo 'SOFTWARE DOCUMENTS Directory is already exist!';			
 			exitcode='1';
 		else
-			echo '/SOFTWARE/DOCUMENTS Directory not exist!';
-			echo 'Start create /SOFTWARE/DOCUMENTS directory!';
+			echo 'SOFTWARE DOCUMENTS Directory not exist!';
+			echo 'Start create SOFTWARE DOCUMENTS directory!';
 			mkdir -v "$localdir"/SOFTWARE/DOCUMENTS;
 			exitcode='0';
 		fi 
@@ -88,6 +124,16 @@ function CreateDocsDir(){
 while [ -n "$1" ]; do
 	if [ "$1" = "-hw" ]; then
 		CreateHWDir;
+		shift;
+		s='0';
+	fi
+	if [ "$1" = "-eda" ]; then
+		CreateEDADir;
+		shift;
+		s='0';
+	fi
+	if [ "$1" = "-cad" ]; then
+		CreateCADDir;
 		shift;
 		s='0';
 	fi
