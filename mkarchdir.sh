@@ -5,15 +5,15 @@ s='0';
 localdir=$(pwd);
 cd "$localdir";
 
-GitHubDirSource(){
+function GitHubDirSource(){
 	echo "Project source: https://github.com/silvajhb/architecture-files-cli";
 }
 
-ExitFunction(){
+function ExitFunction(){
 	exit $exitcode;
 }
 
-print_usage(){
+function print_usage(){
 	echo '';
 	GitHubDirSource;
 	echo '';
@@ -26,7 +26,7 @@ print_usage(){
 	echo '';
 }
 
-CreateHWDir(){
+function CreateHWDir(){
 	if [ -d "$localdir/HARDWARE" ]; then
 		echo 'HARDWARE Directory is already exist!';			
 		exitcode='1';
@@ -38,7 +38,7 @@ CreateHWDir(){
 	fi
 }
 
-CreateSWDir(){
+function CreateSWDir(){
 	if [ -d "$localdir/SOFTWARE" ]; then
 		echo 'SOFTWARE Directory is already exist!';			
 		exitcode='1';
@@ -51,39 +51,70 @@ CreateSWDir(){
 
 }
 
-Main(){
-	while [ -n "$1" ]; do
-		if [ "$1" = "-hw" ]; then
-			CreateHWDir;
-			shift;
-			s='0';
-		fi
-		if [ "$1" = "-sw" ]; then
-			CreateSWDir;
-			shift;
-			s='0';
-		fi
-		if [ "$1" = "-docs" ]; then
-			shift
-			s='0';
-		fi
-		if [ "$1" = "-readme" ]; then
-			shift
-			s='0';	
-		fi
-		if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-			print_usage;
-			exitcode='0';
-			s='0';
-			ExitFunction;
+function CreateDocsDir(){
+	if [ -d "$localdir/DOCUMENTS" ]; then
+		echo 'DOCUMENTS Directory is already exist!';			
+		exitcode='1';
+	else
+		echo 'DOCUMENTS Directory not exist!';
+		echo 'Start create DOCUMENTS directory!';
+		mkdir -v "$localdir"/DOCUMENTS;
+		exitcode='0';
+	fi
+	if [ -d "$localdir/HARDWARE" ]; then
+		if [ -d "$localdir/HARDWARE/DOCUMENTS" ]; then
+			echo '/HARDWARE/DOCUMENTS Directory is already exist!';			
+			exitcode='1';
 		else
-			s="$s"+1;
-			if [ "$s" = "2" ]; then
-				s='0';
-				ExitFunction;
-			fi
-		fi
-	done
+			echo '/HARDWARE/DOCUMENTS Directory not exist!';
+			echo 'Start create /HARDWARE/DOCUMENTS directory!';
+			mkdir -v "$localdir"/HARDWARE/DOCUMENTS;
+			exitcode='0';
+		fi 
+	fi
+	if [ -d "$localdir/SOFTWARE" ]; then
+		if [ -d "$localdir/SOFTWARE/DOCUMENTS" ]; then
+			echo '/SOFTWARE/DOCUMENTS Directory is already exist!';			
+			exitcode='1';
+		else
+			echo '/SOFTWARE/DOCUMENTS Directory not exist!';
+			echo 'Start create /SOFTWARE/DOCUMENTS directory!';
+			mkdir -v "$localdir"/SOFTWARE/DOCUMENTS;
+			exitcode='0';
+		fi 
+	fi
 }
 
-Main;
+while [ -n "$1" ]; do
+	if [ "$1" = "-hw" ]; then
+		CreateHWDir;
+		shift;
+		s='0';
+	fi
+	if [ "$1" = "-sw" ]; then
+		CreateSWDir;
+		shift;
+		s='0';
+	fi
+	if [ "$1" = "-docs" ]; then
+		CreateDocsDir;
+		shift
+		s='0';
+	fi
+	if [ "$1" = "-readme" ]; then
+		shift
+		s='0';	
+	fi
+	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+		print_usage;
+		exitcode='0';
+		s='0';
+		ExitFunction;
+	else
+		s="$s"+1;
+		if [ "$s" = "2" ]; then
+			s='0';
+			ExitFunction;
+		fi
+	fi
+done
