@@ -121,6 +121,43 @@ function CreateDocsDir(){
 	fi
 }
 
+function CreateReadmeDir(){
+	if [ -f "$localdir/README.md" ]; then
+		echo "$localdir/README.md already exists!";
+	else
+		echo "$localdir/README.md no exists!";
+		echo 'Start create README.md file!';
+		touch "$localdir/README.md";
+		var=$(basename $(pwd));
+		var="#"$var;
+		echo $var > "$localdir"/README.md;
+	fi
+	if [ -d "$localdir/HARDWARE" ]; then
+		if [ -f "$localdir/HARDWARE/README.md" ]; then
+			echo "$localdir/HARDWARE/README.md already exists!";
+		else
+			echo "$localdir/HARDWARE/README.md no exists!";
+			echo 'Start create HARDWARE/README.md file!';
+			touch "$localdir/HARDWARE/README.md";
+			var=$(basename $(pwd));
+			var="#"$var;
+			echo $var > "$localdir"/HARDWARE/README.md;
+		fi
+	fi
+	if [ -d "$localdir/SOFTWARE" ]; then
+		if [ -f "$localdir/SOFTWARE/README.md" ]; then
+			echo "$localdir/SOFTWARE/README.md already exists!";
+		else
+			echo "$localdir/SOFTWARE/README.md no exists!";
+			echo 'Start create SOFTWARE/README.md file!';
+			touch "$localdir/SOFTWARE/README.md";
+			var=$(basename $(pwd));
+			var="#"$var;
+			echo $var > "$localdir"/SOFTWARE/README.md;
+		fi
+	fi
+}
+
 while [ -n "$1" ]; do
 	if [ "$1" = "-hw" ]; then
 		CreateHWDir;
@@ -148,6 +185,7 @@ while [ -n "$1" ]; do
 		s='0';
 	fi
 	if [ "$1" = "-readme" ]; then
+		CreateReadmeDir;
 		shift
 		s='0';	
 	fi
