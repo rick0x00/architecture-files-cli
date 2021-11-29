@@ -162,6 +162,16 @@ function CreateReadmeDir(){
 	fi
 }
 
+if [ -z "$1" ]; then
+	CreateHWDir;
+	CreateEDADir;
+	CreateCADDir;
+	CreateSWDir;
+	CreateDocsDir;
+	CreateReadmeDir;
+	ExitFunction;
+fi
+
 while [ -n "$1" ]; do
 	if [ "$1" = "-hw" ]; then
 		CreateHWDir;
